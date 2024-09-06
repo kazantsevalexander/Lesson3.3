@@ -18,11 +18,16 @@ target_height = 80
 target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
-color_bg = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+color_bg = (random.randint(50, 100), random.randint(50, 200), random.randint(50, 200))
 
 running = True
+
 while running:
     screen.fill(color_bg)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
     pygame.display.update()
 
 
