@@ -22,6 +22,8 @@ color_bg = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 25
 
 running = True
 while running:
-    pass
+    screen.fill(color_bg)
+    pygame.display.update()
+
 
 pygame.quit()
