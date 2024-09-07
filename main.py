@@ -12,8 +12,10 @@ icon = pygame.image.load("img/2689911.png")
 pygame.display.set_icon(icon)
 
 target_img = pygame.image.load("img/target.png")
-target_width = 80
-target_height = 80
+target_width = random.randint(30, 150)
+target_height = target_width
+img_size = (target_width, target_height)
+scaled_img = pygame.transform.smoothscale(target_img, img_size)
 
 target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
@@ -27,8 +29,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
+                target_width = random.randint(30, 150)
+                target_height = target_width
+                target_x = random.randint(0, SCREEN_WIDTH - target_width)
+                target_y = random.randint(0, SCREEN_HEIGHT - target_height)
+                img_size = (target_width, target_height)
+                scaled_img = pygame.transform.smoothscale(target_img, img_size)
 
+    screen.blit(scaled_img, (target_x, target_y))
     pygame.display.update()
-
 
 pygame.quit()
