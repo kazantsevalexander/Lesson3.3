@@ -17,6 +17,7 @@ target_height = target_width
 img_size = (target_width, target_height)
 scaled_img = pygame.transform.smoothscale(target_img, img_size)
 
+# Начальные координаты мишени
 target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
@@ -24,38 +25,9 @@ color_bg = (random.randint(50, 100), random.randint(50, 200), random.randint(50,
 
 running = True
 
-def var_x(target_x):
-    target_x_new = random.randint(0, SCREEN_WIDTH - target_width)
-    if target_x_new > target_x:
-        while target_x_new != target_x:
-            target_x += 1
-            return target_x
-    else:
-        while target_x_new != target_x:
-            target_x -= 1
-            return target_x
-
-def var_y(target_y):
-    target_y_new = random.randint(0, SCREEN_HEIGHT - target_height)
-    if target_y_new > target_x:
-        while target_y_new != target_y:
-            target_y += 1
-            return target_y
-    else:
-        while target_y_new != target_y:
-            target_y -= 1
-            return target_y
-
-def var_width(target_width):
-    target_width_new = random.randint(30, 150)
-    if target_width_new > target_width:
-        while target_width_new != target_width:
-            target_width += 1
-            return target_width
-    else:
-        while target_width_new != target_width:
-            target_width -= 1
-            return target_width
+target_speed = 5  # Скорость перемещения мишени
+target_new_x = target_x
+target_new_y = target_y
 
 while running:
     screen.fill(color_bg)
@@ -65,12 +37,18 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
-                target_width = var_width(target_width)
+                # Получаем новые случайные координаты и размеры
+                target_width = random.randint(30, 150)
                 target_height = target_width
-                target_x = var_x(target_x)
-                target_y = var_y(target_y)
+                target_new_x = random.randint(0, SCREEN_WIDTH - target_width)
+                target_new_y = random.randint(0, SCREEN_HEIGHT - target_height)
                 img_size = (target_width, target_height)
                 scaled_img = pygame.transform.smoothscale(target_img, img_size)
+
+    # Плавное перемещение мишени
+    if target_x != target_new_x or target_y != target_new_y:
+        target_x += (target_new_x - target_x) / target_speed
+        target_y += (target_new_y - target_y) / target_speed
 
     screen.blit(scaled_img, (target_x, target_y))
     pygame.display.update()
