@@ -58,7 +58,8 @@ while running:
             screen.blit(game_over, (350, 290))  # Отображаем текст "GAME OVER"
             pygame.display.flip()  # Обновление экрана
             pygame.time.delay(2000)  # Задержка на 2 секунды
-            running = False  # Выход из игрового цикла
+            score = 0  # Начальный счет
+            strel = 10  # Количество оставшихся стрел
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # Если нажата кнопка мыши
             mouse_x, mouse_y = pygame.mouse.get_pos()  # Получаем координаты мыши
